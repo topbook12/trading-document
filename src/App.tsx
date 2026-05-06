@@ -7,6 +7,7 @@ import { Timestamp } from 'firebase/firestore';
 import { format } from 'date-fns';
 import { cn } from './lib/utils';
 import { motion, AnimatePresence } from 'motion/react';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 
 function Dashboard() {
@@ -766,8 +767,45 @@ function UploadModal({ onClose, onUploadComplete }: { onClose: () => void, onUpl
 }
 
 function EntryModal({ entry, onClose, onDelete }: { entry: JournalEntry, onClose: () => void, onDelete: () => void }) {
+  const [isZoomed, setIsZoomed] = useState(false);
+
   return (
     <AnimatePresence>
+      {isZoomed && entry.mediaType !== 'video' && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-md flex items-center justify-center cursor-zoom-out"
+          onClick={() => setIsZoomed(false)}
+        >
+          <button 
+            className="fixed top-6 right-6 z-[70] bg-white/10 text-white p-3 rounded-full hover:bg-white/20 transition-colors backdrop-blur-md"
+            onClick={(e) => { e.stopPropagation(); setIsZoomed(false); }}
+          >
+            <X className="w-6 h-6" />
+          </button>
+          
+          <div className="w-full h-full flex items-center justify-center p-0" onClick={(e) => e.stopPropagation()}>
+            <TransformWrapper
+               initialScale={1}
+               minScale={0.5}
+               maxScale={8}
+               centerOnInit={true}
+               wheel={{ step: 0.1 }}
+            >
+              <TransformComponent wrapperStyle={{ width: '100%', height: '100%' }} contentStyle={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <img 
+                  src={entry.mediaUrl} 
+                  alt={entry.title} 
+                  className="w-auto h-auto max-w-full max-h-[100vh] object-contain cursor-grab active:cursor-grabbing" 
+                />
+              </TransformComponent>
+            </TransformWrapper>
+          </div>
+        </motion.div>
+      )}
+
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -785,11 +823,25 @@ function EntryModal({ entry, onClose, onDelete }: { entry: JournalEntry, onClose
             <X className="w-5 h-5" />
           </button>
 
-          <div className="flex-1 bg-black/50 flex items-center justify-center p-2">
+          <div className="flex-1 bg-black/50 flex items-center justify-center p-2 relative group">
             {entry.mediaType === 'video' ? (
                <video src={entry.mediaUrl} controls autoPlay className="max-w-full max-h-full object-contain rounded-xl" />
             ) : (
-               <img src={entry.mediaUrl} alt={entry.title} className="max-w-full max-h-full object-contain rounded-xl" />
+               <>
+                 <img 
+                   src={entry.mediaUrl} 
+                   alt={entry.title} 
+                   className="max-w-full max-h-full object-contain rounded-xl cursor-zoom-in" 
+                   onClick={() => setIsZoomed(true)}
+                 />
+                 <button 
+                   onClick={() => setIsZoomed(true)}
+                   className="absolute top-6 left-6 z-10 bg-black/50 text-white p-2.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm shadow-xl flex items-center gap-2 text-sm font-medium pr-4"
+                 >
+                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>
+                   Zoom
+                 </button>
+               </>
             )}
           </div>
 
