@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="112" fill="#0A0A0A" />
+  
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="chartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#818CF8" />
+    </linearGradient>
+    <linearGradient id="candleUpGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#34D399" />
+    </linearGradient>
+    <linearGradient id="candleDownGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#EF4444" />
+      <stop offset="100%" stop-color="#F87171" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="15" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Outline / Background detail -->
+  <path d="M120 392 L392 392" stroke="#262626" stroke-width="12" stroke-linecap="round" />
+  
+  <!-- Candle 1 (Up) -->
+  <rect x="156" y="220" width="32" height="120" rx="8" fill="url(#candleUpGrad)" />
+  <path d="M172 180 L172 220 M172 340 L172 370" stroke="url(#candleUpGrad)" stroke-width="8" stroke-linecap="round" />
+  
+  <!-- Candle 2 (Down) -->
+  <rect x="240" y="260" width="32" height="90" rx="8" fill="url(#candleDownGrad)" />
+  <path d="M256 220 L256 260 M256 350 L256 380" stroke="url(#candleDownGrad)" stroke-width="8" stroke-linecap="round" />
+  
+  <!-- Candle 3 (Up) -->
+  <rect x="324" y="140" width="32" height="150" rx="8" fill="url(#candleUpGrad)" filter="url(#glow)" />
+  <path d="M340 100 L340 140 M340 290 L340 330" stroke="url(#candleUpGrad)" stroke-width="8" stroke-linecap="round" />
+  
+  <!-- Line connecting trend -->
+  <path d="M172 200 L256 240 L340 120" fill="none" stroke="url(#chartGrad)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

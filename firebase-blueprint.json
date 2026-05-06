@@ -1,0 +1,66 @@
+{
+  "entities": {
+    "JournalEntry": {
+      "title": "Journal Entry",
+      "description": "A trading journal entry containing an image or video and associated metadata.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "ID of the user who owns this entry"
+        },
+        "mediaUrl": {
+          "type": "string",
+          "description": "URL to the image or video in Storage"
+        },
+        "mediaType": {
+          "type": "string",
+          "enum": ["image", "video"],
+          "description": "Type of media"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title or short description of the journal entry"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Additional text details or lessons learned"
+        },
+        "streak": {
+          "type": "string",
+          "enum": ["losing", "winning", "none"],
+          "description": "Trading streak condition at the time"
+        },
+        "marketCondition": {
+          "type": "string",
+          "enum": ["buy-side", "sell-side", "ranging", "choppy"],
+          "description": "Condition of the market"
+        },
+        "expectationFulfilled": {
+          "type": "boolean",
+          "description": "Did the setup meet the trader's expectations?"
+        },
+             "tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Custom tags for easy filtering"
+             },
+        "createdAt": {
+          "type": "number",
+          "description": "Timestamp"
+        },
+        "updatedAt": {
+          "type": "number",
+          "description": "Timestamp"
+        }
+      },
+      "required": ["userId", "mediaUrl", "mediaType", "title", "streak", "marketCondition", "expectationFulfilled", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/journal_entries/{entryId}": {
+      "schema": { "$ref": "#/entities/JournalEntry" },
+      "description": "Stores user journal entries containing trading screenshots/videos and their metadata."
+    }
+  }
+}
