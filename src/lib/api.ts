@@ -22,11 +22,12 @@ export async function uploadMedia(file: File, userId: string): Promise<string> {
     
     if (!response.ok) {
         let errText = 'Failed to get presigned URL for upload';
+        const rawText = await response.text();
         try {
-            const errJson = await response.json();
+            const errJson = JSON.parse(rawText);
             errText = errJson.error || errJson.details || errText;
         } catch {
-            errText = await response.text() || errText;
+            errText = rawText || errText;
         }
         throw new Error(errText);
     }
