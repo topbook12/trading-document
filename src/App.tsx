@@ -408,8 +408,8 @@ function Dashboard() {
                     </div>
                     <div className="mt-auto block">
                       <div className="flex flex-wrap gap-1 mb-3">
-                        {entry.tags.slice(0, 3).map(t => (
-                          <span key={t} className="text-[10px] text-neutral-600 dark:text-neutral-400 bg-neutral-100 dark:bg-neutral-800/80 px-1.5 py-0.5 rounded">#{t}</span>
+                        {entry.tags.slice(0, 3).map((t, idx) => (
+                          <span key={`${t}-${idx}`} className="text-[10px] text-neutral-600 dark:text-neutral-400 bg-neutral-100 dark:bg-neutral-800/80 px-1.5 py-0.5 rounded">#{t}</span>
                         ))}
                         {entry.tags.length > 3 && <span className="text-[10px] text-neutral-500 dark:text-neutral-500 ">+{entry.tags.length - 3}</span>}
                       </div>
@@ -716,16 +716,16 @@ function UploadModal({ onClose, onUploadComplete }: { onClose: () => void, onUpl
                      <label className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-3 uppercase tracking-wider">Tags</label>
                      <div className="bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl p-2 flex flex-wrap gap-2 min-h-[56px] items-center focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 transition-all">
                        <AnimatePresence>
-                         {tags.map(tag => (
+                         {tags.map((tag, idx) => (
                            <motion.span
-                             key={tag}
+                             key={`${tag}-${idx}`}
                              initial={{ scale: 0.8, opacity: 0 }}
                              animate={{ scale: 1, opacity: 1 }}
                              exit={{ scale: 0.8, opacity: 0 }}
                              className="bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 px-3 py-1.5 rounded-lg text-sm flex items-center gap-1.5"
                            >
                              #{tag}
-                             <button type="button" onClick={() => setTags(tags.filter(t => t !== tag))} className="text-neutral-500 dark:text-neutral-500 hover:text-rose-400 transition-colors">
+                             <button type="button" onClick={() => setTags(tags.filter((t, i) => i !== idx))} className="text-neutral-500 dark:text-neutral-500 hover:text-rose-400 transition-colors">
                                <X className="w-3.5 h-3.5" />
                              </button>
                            </motion.span>
@@ -899,8 +899,8 @@ function EntryModal({ entry, onClose, onDelete }: { entry: JournalEntry, onClose
                    <div>
                      <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-500 mb-4">Tags</h4>
                      <div className="flex flex-wrap gap-2">
-                       {entry.tags.map(t => (
-                         <span key={t} className="bg-neutral-100 dark:bg-neutral-800/80 text-neutral-700 dark:text-neutral-300 text-xs px-3 py-1.5 rounded-lg border border-neutral-300 dark:border-neutral-700/50">#{t}</span>
+                       {entry.tags.map((t, idx) => (
+                         <span key={`${t}-${idx}`} className="bg-neutral-100 dark:bg-neutral-800/80 text-neutral-700 dark:text-neutral-300 text-xs px-3 py-1.5 rounded-lg border border-neutral-300 dark:border-neutral-700/50">#{t}</span>
                        ))}
                      </div>
                    </div>
