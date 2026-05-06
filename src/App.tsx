@@ -165,7 +165,7 @@ function Dashboard() {
 
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-50 flex flex-col font-sans">
-      <header className="border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-white dark:bg-neutral-900 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+      <header className="border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
         <div>
           <h1 className="text-xl font-bold tracking-tight text-neutral-900 dark:text-white flex items-center gap-2">
             <span className="bg-indigo-500 p-1.5 rounded-lg"><Calendar className="w-5 h-5 text-neutral-900 dark:text-white" /></span>
@@ -205,7 +205,7 @@ function Dashboard() {
       <main className="flex-1 flex overflow-hidden relative pb-16 md:pb-0">
         {/* Sidebar Filters */}
         <aside className={cn(
-          "w-72 border-r border-neutral-200 dark:border-neutral-800 bg-white dark:bg-white dark:bg-neutral-900/95 backdrop-blur-md p-6 flex flex-col gap-6 overflow-y-auto transition-transform absolute md:relative z-20 h-full",
+          "w-72 border-r border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/95 backdrop-blur-md p-6 flex flex-col gap-6 overflow-y-auto transition-transform absolute md:relative z-20 h-full",
           isMobileFilterOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         )}>
           <div className="flex items-center justify-between md:hidden mb-2">
@@ -323,7 +323,7 @@ function Dashboard() {
           ) : isFiltering ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-                <div key={n} className="bg-white dark:bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl overflow-hidden flex flex-col h-[260px] animate-pulse">
+                <div key={n} className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl overflow-hidden flex flex-col h-[260px] animate-pulse">
                    <div className="relative aspect-video bg-neutral-100 dark:bg-neutral-800/50" />
                    <div className="p-4 flex-1 flex flex-col gap-3">
                      <div className="h-4 bg-neutral-100 dark:bg-neutral-800 rounded w-3/4"></div>
@@ -371,7 +371,7 @@ function Dashboard() {
                 <div 
                   key={entry.id} 
                   onClick={() => setSelectedEntry(entry)}
-                  className="group bg-white dark:bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl overflow-hidden hover:border-indigo-500/50 hover:shadow-[0_0_15px_rgba(99,102,241,0.1)] transition-all cursor-pointer flex flex-col"
+                  className="group bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl overflow-hidden hover:border-indigo-500/50 hover:shadow-[0_0_15px_rgba(99,102,241,0.1)] transition-all cursor-pointer flex flex-col"
                 >
                   <div className="relative aspect-video bg-neutral-50 dark:bg-neutral-950 flex items-center justify-center overflow-hidden">
                     {entry.mediaType === 'video' ? (
@@ -388,9 +388,9 @@ function Dashboard() {
                     )}
                     <div className="absolute top-2 right-2 flex gap-1">
                       {entry.expectationFulfilled ? (
-                        <span className="bg-emerald-500/20 text-emerald-400 backdrop-blur-md px-2 py-0.5 rounded text-xs font-medium border border-emerald-500/20">Target Hit</span>
+                        <span className="bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 backdrop-blur-md px-2 py-0.5 rounded text-xs font-medium border border-emerald-200 dark:border-emerald-500/20">Target Hit</span>
                       ) : (
-                        <span className="bg-rose-500/20 text-rose-400 backdrop-blur-md px-2 py-0.5 rounded text-xs font-medium border border-rose-500/20">Missed</span>
+                        <span className="bg-rose-100 dark:bg-rose-500/20 text-rose-700 dark:text-rose-400 backdrop-blur-md px-2 py-0.5 rounded text-xs font-medium border border-rose-200 dark:border-rose-500/20">Missed</span>
                       )}
                     </div>
                   </div>
@@ -400,7 +400,7 @@ function Dashboard() {
                        <span className="capitalize px-1.5 py-0.5 bg-neutral-100 dark:bg-neutral-800 rounded">{entry.marketCondition.replace('-', ' ')}</span>
                        {entry.streak !== 'none' && (
                          <span className={cn("capitalize px-1.5 py-0.5 rounded", 
-                            entry.streak === 'winning' ? "bg-emerald-900/30 text-emerald-400" : "bg-rose-900/30 text-rose-400"
+                            entry.streak === 'winning' ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400" : "bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400"
                          )}>
                             {entry.streak} streak
                          </span>
@@ -426,7 +426,7 @@ function Dashboard() {
       </main>
 
       {/* Mobile Bottom Nav */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-around z-30 px-2 pb-safe">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-around z-30 px-2 pb-safe">
         <button 
           onClick={() => { setIsMobileFilterOpen(false); window.scrollTo(0, 0); }}
           className="flex flex-col items-center py-3 px-4 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:text-white transition-colors"
@@ -564,9 +564,9 @@ function UploadModal({ onClose, onUploadComplete }: { onClose: () => void, onUpl
           animate={{ y: 0, opacity: 1, scale: 1 }}
           exit={{ y: 20, opacity: 0, scale: 0.95 }}
           transition={{ type: "spring", damping: 25, stiffness: 300 }}
-          className="bg-white dark:bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl w-full max-w-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]"
+          className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl w-full max-w-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]"
         >
-          <div className="flex items-center justify-between px-8 py-6 border-b border-neutral-200 dark:border-neutral-800 sticky top-0 bg-white dark:bg-white dark:bg-neutral-900/80 backdrop-blur-md z-10">
+          <div className="flex items-center justify-between px-8 py-6 border-b border-neutral-200 dark:border-neutral-800 sticky top-0 bg-white dark:bg-neutral-900/80 backdrop-blur-md z-10">
             <h2 className="text-xl font-bold text-neutral-900 dark:text-white tracking-tight flex items-center gap-2">
                <div className="w-8 h-8 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
                  <Upload className="w-4 h-4" />
@@ -638,7 +638,7 @@ function UploadModal({ onClose, onUploadComplete }: { onClose: () => void, onUpl
                              "relative px-4 py-2 rounded-full text-sm font-medium transition-colors border",
                              marketCondition === opt.id 
                                ? "border-indigo-500 text-neutral-900 dark:text-white" 
-                               : "border-neutral-300 dark:border-neutral-700 bg-white dark:bg-white dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 hover:bg-neutral-100 dark:bg-neutral-800"
+                               : "border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 hover:bg-neutral-100 dark:bg-neutral-800"
                            )}
                          >
                            {marketCondition === opt.id && (
@@ -667,7 +667,7 @@ function UploadModal({ onClose, onUploadComplete }: { onClose: () => void, onUpl
                                "relative px-4 py-2 rounded-xl text-sm font-medium transition-colors border",
                                streak === opt.id 
                                  ? "text-neutral-900 dark:text-white border-transparent" 
-                                 : "border-neutral-300 dark:border-neutral-700 bg-white dark:bg-white dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:bg-neutral-800"
+                                 : "border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:bg-neutral-800"
                              )}
                            >
                              {streak === opt.id && (
@@ -693,7 +693,7 @@ function UploadModal({ onClose, onUploadComplete }: { onClose: () => void, onUpl
                            type="button"
                            onClick={() => setExpectationFulfilled(true)}
                            className={cn("flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all",
-                              expectationFulfilled ? "bg-emerald-500/20 text-emerald-400 shadow-sm" : "text-neutral-500 dark:text-neutral-500 hover:text-neutral-700 dark:text-neutral-300"
+                              expectationFulfilled ? "bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 shadow-sm" : "text-neutral-500 hover:text-neutral-700 dark:text-neutral-300"
                            )}
                          >
                            Fulfilled
@@ -702,7 +702,7 @@ function UploadModal({ onClose, onUploadComplete }: { onClose: () => void, onUpl
                            type="button"
                            onClick={() => setExpectationFulfilled(false)}
                            className={cn("flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all",
-                              !expectationFulfilled ? "bg-rose-500/20 text-rose-400 shadow-sm" : "text-neutral-500 dark:text-neutral-500 hover:text-neutral-700 dark:text-neutral-300"
+                              !expectationFulfilled ? "bg-rose-100 dark:bg-rose-500/20 text-rose-700 dark:text-rose-400 shadow-sm" : "text-neutral-500 hover:text-neutral-700 dark:text-neutral-300"
                            )}
                          >
                            Missed
@@ -762,7 +762,7 @@ function UploadModal({ onClose, onUploadComplete }: { onClose: () => void, onUpl
             </form>
           </div>
 
-          <div className="border-t border-neutral-200 dark:border-neutral-800 p-6 bg-white dark:bg-white dark:bg-neutral-900 flex justify-between items-center sm:flex-row flex-col gap-4">
+          <div className="border-t border-neutral-200 dark:border-neutral-800 p-6 bg-white dark:bg-neutral-900 flex justify-between items-center sm:flex-row flex-col gap-4">
              <div className="text-xs text-neutral-500 dark:text-neutral-500 font-medium">
                Complete all fields to save your entry
              </div>
@@ -836,7 +836,7 @@ function EntryModal({ entry, onClose, onDelete }: { entry: JournalEntry, onClose
           animate={{ y: 0, opacity: 1, scale: 1 }}
           exit={{ y: 20, opacity: 0, scale: 0.95 }}
           transition={{ type: "spring", damping: 25, stiffness: 300 }}
-          className="bg-white dark:bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl w-full max-w-6xl h-[90vh] overflow-hidden shadow-2xl flex flex-col md:flex-row relative"
+          className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl w-full max-w-6xl h-[90vh] overflow-hidden shadow-2xl flex flex-col md:flex-row relative"
         >
           <button onClick={onClose} className="absolute top-6 right-6 z-10 bg-black/50 text-neutral-900 dark:text-white p-2.5 rounded-full hover:bg-black/80 transition-colors backdrop-blur-sm shadow-xl">
             <X className="w-5 h-5" />
@@ -864,7 +864,7 @@ function EntryModal({ entry, onClose, onDelete }: { entry: JournalEntry, onClose
             )}
           </div>
 
-          <div className="w-full md:w-96 bg-white dark:bg-white dark:bg-neutral-900 border-l border-neutral-200 dark:border-neutral-800 flex flex-col overflow-y-auto">
+          <div className="w-full md:w-96 bg-white dark:bg-neutral-900 border-l border-neutral-200 dark:border-neutral-800 flex flex-col overflow-y-auto">
              <div className="p-8">
                <div className="flex items-start justify-between gap-4 mb-4">
                   <h2 className="text-2xl font-bold text-neutral-900 dark:text-white leading-tight">{entry.title}</h2>
@@ -887,7 +887,7 @@ function EntryModal({ entry, onClose, onDelete }: { entry: JournalEntry, onClose
                       </div>
                     </div>
                     
-                    <div className={cn("rounded-xl p-4 border", entry.expectationFulfilled ? "bg-emerald-950/20 border-emerald-900/30" : "bg-rose-950/20 border-rose-900/30")}>
+                    <div className={cn("rounded-xl p-4 border", entry.expectationFulfilled ? "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-900/30" : "bg-rose-50 dark:bg-rose-950/20 border-rose-200 dark:border-rose-900/30")}>
                       <p className="text-[10px] text-neutral-500 dark:text-neutral-500 uppercase tracking-widest mb-1.5">Outcome vs Expectation</p>
                       <p className={cn("text-sm font-semibold", entry.expectationFulfilled ? "text-emerald-400" : "text-rose-400")}>
                         {entry.expectationFulfilled ? "Trade played out as expected" : "Trade deviated or failed"}
@@ -917,7 +917,7 @@ function EntryModal({ entry, onClose, onDelete }: { entry: JournalEntry, onClose
                </div>
              </div>
 
-             <div className="mt-auto p-6 border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-white dark:bg-neutral-900">
+             <div className="mt-auto p-6 border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900">
                <button 
                  onClick={onDelete}
                  className="w-full py-3 rounded-xl border border-rose-900/50 text-rose-400 font-semibold text-sm hover:bg-rose-950/50 hover:text-rose-300 transition-colors shadow-sm"
@@ -941,7 +941,7 @@ function WelcomeScreen() {
          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
       </div>
       
-      <div className="max-w-md w-full text-center relative z-10 px-8 py-12 rounded-3xl bg-white dark:bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-2xl">
+      <div className="max-w-md w-full text-center relative z-10 px-8 py-12 rounded-3xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-2xl">
         <div className="w-16 h-16 bg-indigo-500/20 text-indigo-400 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-inner ring-1 ring-indigo-500/50">
           <Calendar className="w-8 h-8" />
         </div>
