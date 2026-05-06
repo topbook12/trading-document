@@ -1,8 +1,7 @@
 import express from "express";
 import { createServer as createViteServer } from "vite";
 import path from "path";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { AwsClient } from 'aws4fetch';
 
 const app = express();
 const PORT = 3000;
@@ -15,13 +14,11 @@ const R2_ACCESS_KEY_ID = process.env.R2_ACCESS_KEY_ID;
 const R2_SECRET_ACCESS_KEY = process.env.R2_SECRET_ACCESS_KEY;
 const R2_BUCKET_NAME = process.env.R2_BUCKET_NAME;
 
-const s3Client = new S3Client({
-  region: "auto",
-  endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-  credentials: {
-    accessKeyId: R2_ACCESS_KEY_ID || '',
-    secretAccessKey: R2_SECRET_ACCESS_KEY || '',
-  },
+const aws = new AwsClient({
+  accessKeyId: R2_ACCESS_KEY_ID || '',
+  secretAccessKey: R2_SECRET_ACCESS_KEY || '',
+  service: 's3',
+  region: 'auto',
 });
 
 app.post("/api/presign-upload", async (req, res) => {
@@ -32,15 +29,18 @@ app.post("/api/presign-upload", async (req, res) => {
       return res.status(400).json({ error: "Filename and contentType are required" });
     }
 
-    const command = new PutObjectCommand({
-      Bucket: R2_BUCKET_NAME,
-      Key: filename,
-      ContentType: contentType,
+    const url = new URL(`https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${R2_BUCKET_NAME}/${filename}`);
+    
+    // Create a signed PUT request
+    const signedRequest = await aws.sign(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': contentType
+      },
+      aws: { signQuery: true }
     });
 
-    const presignedUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
-    
-    res.json({ presignedUrl, filename });
+    res.json({ presignedUrl: signedRequest.url, filename });
   } catch (error) {
     console.error("Error generating presigned URL:", error);
     res.status(500).json({ error: "Failed to generate presigned URL" });

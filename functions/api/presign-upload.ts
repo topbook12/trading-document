@@ -1,7 +1,6 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { AwsClient } from 'aws4fetch';
 
-export async function onRequestPost({ request, env }) {
+export async function onRequestPost({ request, env }: any) {
   try {
     const { filename, contentType } = await request.json();
     
@@ -12,30 +11,30 @@ export async function onRequestPost({ request, env }) {
       });
     }
 
-    const s3Client = new S3Client({
-      region: "auto",
-      endpoint: `https://${env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-      credentials: {
-        accessKeyId: env.R2_ACCESS_KEY_ID || '',
-        secretAccessKey: env.R2_SECRET_ACCESS_KEY || '',
-      },
+    const aws = new AwsClient({
+      accessKeyId: env.R2_ACCESS_KEY_ID || '',
+      secretAccessKey: env.R2_SECRET_ACCESS_KEY || '',
+      service: 's3',
+      region: 'auto',
     });
 
-    const command = new PutObjectCommand({
-      Bucket: env.R2_BUCKET_NAME,
-      Key: filename,
-      ContentType: contentType,
-    });
-
-    const presignedUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+    const url = new URL(`https://${env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${env.R2_BUCKET_NAME}/${filename}`);
     
-    return new Response(JSON.stringify({ presignedUrl, filename }), {
+    const signedRequest = await aws.sign(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': contentType
+      },
+      aws: { signQuery: true }
+    });
+
+    return new Response(JSON.stringify({ presignedUrl: signedRequest.url, filename }), {
       status: 200,
       headers: { "Content-Type": "application/json" }
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error generating presigned URL:", error);
-    return new Response(JSON.stringify({ error: "Failed to generate presigned URL" }), {
+    return new Response(JSON.stringify({ error: "Failed to generate presigned URL", details: error.message }), {
       status: 500,
       headers: { "Content-Type": "application/json" }
     });
