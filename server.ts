@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import { createServer as createViteServer } from "vite";
 import path from "path";
@@ -27,6 +28,10 @@ app.post("/api/presign-upload", async (req, res) => {
     
     if (!filename || !contentType) {
       return res.status(400).json({ error: "Filename and contentType are required" });
+    }
+
+    if (!R2_ACCOUNT_ID || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY || !R2_BUCKET_NAME) {
+      return res.status(500).json({ error: "Cloudflare R2 Environment Variables are missing. Please add them in the AI Studio Settings." });
     }
 
     const url = new URL(`https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${R2_BUCKET_NAME}/${filename}`);
